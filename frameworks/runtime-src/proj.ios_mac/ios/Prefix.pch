@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'Smart_Pi' target in the 'Smart_Pi' project
+//
+
+#ifdef __OBJC__
+	#import <Foundation/Foundation.h>
+	#import <UIKit/UIKit.h>
+#endif
