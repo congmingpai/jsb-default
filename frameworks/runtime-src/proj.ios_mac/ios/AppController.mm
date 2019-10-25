@@ -27,6 +27,7 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "FirstViewController.h"
 #import "platform/ios/CCEAGLView-ios.h"
 
 #import "cocos-analytics/CAAgent.h"
@@ -64,11 +65,47 @@ static AppDelegate* s_sharedApplication = nullptr;
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
 
+    FirstViewController* firstViewController = [[FirstViewController alloc] init];
+    [firstViewController setViewDidAppearHandler:@selector(onFirstViewDidAppear) :self];
+
+    // Set RootViewController to window
+    if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
+    {
+        // warning: addSubView doesn't work on iOS6
+        [window addSubview: firstViewController.view];
+    }
+    else
+    {
+        // use this method on ios6
+        [window setRootViewController:firstViewController];
+    }
+
+    [window makeKeyAndVisible];
+
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    
+    // sdk manager
+    SdkManager::appController = self;
+    SdkManager::viewController = _viewController;
+    SdkManager::window = window;
+    SdkManager::applicationDidFinishLaunching(application, launchOptions);
+
+    return YES;
+}
+
+- (void)onFirstViewDidAppear {
+    cocos2d::Application *app = cocos2d::Application::getInstance();
+
+    // Initialize the GLView attributes
+    app->initGLContextAttrs();
+    cocos2d::GLViewImpl::convertAttrs();
+
+    // Override point for customization after application launch.
+
     // Use RootViewController to manage CCEAGLView
     _viewController = [[RootViewController alloc]init];
     _viewController.wantsFullScreenLayout = YES;
-
-
+    
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
     {
@@ -80,25 +117,22 @@ static AppDelegate* s_sharedApplication = nullptr;
         // use this method on ios6
         [window setRootViewController:_viewController];
     }
-
+    
     [window makeKeyAndVisible];
-
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
 
-    // sdk manager
-    SdkManager::appController = self;
-    SdkManager::viewController = _viewController;
-    SdkManager::window = window;
-    SdkManager::applicationDidFinishLaunching(application, launchOptions);
-
     //run the cocos2d-x game scene
     app->run();
-
-    return YES;
+    
+    // 第一次触发此消息时加载游戏
+    // 将启动逻辑移至此处，防止iOS启动超过20秒被系统自动杀死
+    if (!app->isApplicationLoaded())
+    {
+        app->applicationOnLoad();
+    }
 }
 
 
@@ -116,14 +150,6 @@ static AppDelegate* s_sharedApplication = nullptr;
     /*
       Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     */
-    
-    // 第一次触发此消息时加载游戏
-    // 将启动逻辑移至此处，防止iOS启动超过20秒被系统自动杀死
-    cocos2d::Application *app = cocos2d::Application::getInstance();
-    if (!app->isApplicationLoaded())
-    {
-        app->applicationOnLoad();
-    }
 
     SdkManager::applicationDidBecomeActive(application);    // We don't need to call this method any more. It will interrupt user defined game pause&resume logic
     /* cocos2d::Director::getInstance()->resume(); */

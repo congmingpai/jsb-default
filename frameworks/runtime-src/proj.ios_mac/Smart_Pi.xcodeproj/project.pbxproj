@@ -122,6 +122,7 @@
 		DEFCD3C521D1E18700A872C6 /* HashSdk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEFCD3C221D1E18700A872C6 /* HashSdk.cpp */; };
 		E2735178215492D700BCBE60 /* courses in Resources */ = {isa = PBXBuildFile; fileRef = E2735177215492D700BCBE60 /* courses */; };
 		E285AE8B2154E017008821D8 /* project.manifest in Resources */ = {isa = PBXBuildFile; fileRef = E285AE8A2154E017008821D8 /* project.manifest */; };
+		E2E8A2512361C32A0085A21B /* FirstViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E2E8A2502361C32A0085A21B /* FirstViewController.mm */; };
 		FA676C761C71AFA200E091E3 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FA676C751C71AFA200E091E3 /* libiconv.dylib */; };
 		FA676C781C71AFAB00E091E3 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FA676C771C71AFAB00E091E3 /* libiconv.dylib */; };
 /* End PBXBuildFile section */
@@ -321,6 +322,8 @@
 		DEFCD3C321D1E18700A872C6 /* HashSdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HashSdk.h; sourceTree = "<group>"; };
 		E2735177215492D700BCBE60 /* courses */ = {isa = PBXFileReference; lastKnownFileType = folder; name = courses; path = ../../../courses; sourceTree = "<group>"; };
 		E285AE8A2154E017008821D8 /* project.manifest */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = project.manifest; path = ../../../project.manifest; sourceTree = "<group>"; };
+		E2E8A24F2361C32A0085A21B /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FirstViewController.h; path = ios/FirstViewController.h; sourceTree = "<group>"; };
+		E2E8A2502361C32A0085A21B /* FirstViewController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; name = FirstViewController.mm; path = ios/FirstViewController.mm; sourceTree = "<group>"; };
 		FA676C751C71AFA200E091E3 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		FA676C771C71AFAB00E091E3 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -517,6 +520,8 @@
 				509D4ABA17EBB2AB00697056 /* RootViewController.h */,
 				509D4ABB17EBB2AB00697056 /* RootViewController.mm */,
 				DE6EEB4E21D35DDE00FA65AE /* Settings.bundle */,
+				E2E8A24F2361C32A0085A21B /* FirstViewController.h */,
+				E2E8A2502361C32A0085A21B /* FirstViewController.mm */,
 			);
 			name = ios;
 			sourceTree = "<group>";
@@ -954,6 +959,7 @@
 				DEFCD3B621D1E13E00A872C6 /* hl_md5wrapper.cpp in Sources */,
 				DEFCD3C021D1E13E00A872C6 /* hl_sha384wrapper.cpp in Sources */,
 				DEFCD3B221D1E13E00A872C6 /* hl_wrapperfactory.cpp in Sources */,
+				E2E8A2512361C32A0085A21B /* FirstViewController.mm in Sources */,
 				DE10A5DB20CFFB4A00B856E3 /* WXMediaMessage+messageConstruct.m in Sources */,
 				DEA4EB5C20D0BF110061D119 /* jsb_custom_auto.cpp in Sources */,
 				DECED05A20F8B5F0000DC6B7 /* Reachability.m in Sources */,
@@ -1122,7 +1128,7 @@
 					"$(SRCROOT)/../Classes/sdks/Bugly/CocosPlugin/agent/iOS/BuglyAgent",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.congmingpai.mobile.rc-test";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.congmingpai.mobile.dev-test";
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1163,7 +1169,7 @@
 					"$(SRCROOT)/../Classes/sdks/Bugly/CocosPlugin/agent/iOS/BuglyAgent",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.congmingpai.mobile.rc-test";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.congmingpai.mobile.dev-test";
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";

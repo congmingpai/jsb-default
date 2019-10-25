@@ -32,5 +32,7 @@
 
 @property(nonatomic, readonly) RootViewController* viewController;
 
+- (void)onFirstViewDidAppear;
+
 @end
 
