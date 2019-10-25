@@ -69,16 +69,7 @@ static AppDelegate* s_sharedApplication = nullptr;
     [firstViewController setViewDidAppearHandler:@selector(onFirstViewDidAppear) :self];
 
     // Set RootViewController to window
-    if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
-    {
-        // warning: addSubView doesn't work on iOS6
-        [window addSubview: firstViewController.view];
-    }
-    else
-    {
-        // use this method on ios6
-        [window setRootViewController:firstViewController];
-    }
+    [self setRootView:firstViewController];
 
     [window makeKeyAndVisible];
 
@@ -91,6 +82,19 @@ static AppDelegate* s_sharedApplication = nullptr;
     SdkManager::applicationDidFinishLaunching(application, launchOptions);
 
     return YES;
+}
+
+- (void)setRootView:(UIViewController*) viewController {
+    if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
+    {
+        // warning: addSubView doesn't work on iOS6
+        [window addSubview: viewController.view];
+    }
+    else
+    {
+        // use this method on ios6
+        [window setRootViewController:viewController];
+    }
 }
 
 - (void)onFirstViewDidAppear {
@@ -107,16 +111,7 @@ static AppDelegate* s_sharedApplication = nullptr;
     _viewController.wantsFullScreenLayout = YES;
     
     // Set RootViewController to window
-    if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
-    {
-        // warning: addSubView doesn't work on iOS6
-        [window addSubview: _viewController.view];
-    }
-    else
-    {
-        // use this method on ios6
-        [window setRootViewController:_viewController];
-    }
+    [self setRootView:_viewController];
     
     [window makeKeyAndVisible];
 
