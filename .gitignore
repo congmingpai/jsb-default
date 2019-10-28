@@ -1,0 +1,26 @@
+# Native代码之外的资源
+/courses
+/js backups (useful for debugging)
+/res
+/src
+.cocos-project.json
+cocos-project-template.json
+depends_request.json
+depends_response.json
+jsb.sqlite
+main.js
+project.json
+project.manifest
+resources.manifest
+
+# frameworks下需要同步的Native代码
+frameworks/*
+!frameworks/runtime-src/
+frameworks/runtime-src/*
+!frameworks/runtime-src/Classes/
+!frameworks/runtime-src/proj.android-studio/
+!frameworks/runtime-src/proj.ios_mac/
+frameworks/runtime-src/proj.ios_mac/mac/
+frameworks/runtime-src/proj.ios_mac/Smart_Pi.xcodeproj/*
+!frameworks/runtime-src/proj.ios_mac/Smart_Pi.xcodeproj/project.pbxproj
+#/frameworks/runtime-src/proj.win32/
