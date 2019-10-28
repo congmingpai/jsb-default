@@ -27,7 +27,9 @@
 
 
 @interface RootViewController : UIViewController {
-
+    UIView* mask;
 }
 - (BOOL)prefersStatusBarHidden;
+- (void)fadeOutMask;
+
 @end

@@ -32,5 +32,8 @@
 
 @property(nonatomic, readonly) RootViewController* viewController;
 
+// 给指定的ViewController添加LaunchScreenBackground.png作为遮罩
++(UIImageView*) addLaunchScreenBackground:(UIViewController*) viewController;
+
 @end
 

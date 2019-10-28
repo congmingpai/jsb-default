@@ -126,6 +126,8 @@ static AppDelegate* s_sharedApplication = nullptr;
 //    {
         app->applicationOnLoad();
 //    }
+    
+    [_viewController fadeOutMask];
 }
 
 
@@ -214,5 +216,16 @@ static AppDelegate* s_sharedApplication = nullptr;
 }
 #endif
 
++(UIImageView*) addLaunchScreenBackground:(UIViewController*) viewController {
+    UIImage* image = [UIImage imageNamed:@"LaunchScreenBackground.png"];
+    UIImageView* imageView = [[UIImageView alloc] init];
+    imageView.image = image;
+    imageView.clipsToBounds = YES;
+    [imageView setFrame:viewController.view.frame];
+    [imageView setContentMode:UIViewContentModeScaleAspectFill];
+    
+    [viewController.view addSubview:imageView];
+    return imageView;
+}
 
 @end
