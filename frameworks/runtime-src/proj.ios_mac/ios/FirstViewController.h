@@ -16,9 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 {
     SEL _onViewDidAppearHandler;
     id _onViewDidAppearTarget;
+    UIView* _mask;
 }
 
 - (void)setViewDidAppearHandler:(SEL) selector :(id) target;
+
+- (void)fadeOutMask:(void (^)(void)) onFinish;
 
 @end
 

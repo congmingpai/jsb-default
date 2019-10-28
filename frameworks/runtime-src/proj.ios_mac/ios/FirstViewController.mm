@@ -8,7 +8,6 @@
 #import "FirstViewController.h"
 #import "AppDelegate.h"
 #import "cocos2d.h"
-#import "AppController.h"
 
 @interface FirstViewController ()
 
@@ -20,7 +19,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     // 添加LaunchScreenBackground.png以防止黑屏
-    [AppController addLaunchScreenBackground:self];
+    UIImage* image = [UIImage imageNamed:@"LaunchScreenBackground.png"];
+    UIImageView* imageView = [[UIImageView alloc] init];
+    imageView.image = image;
+    imageView.clipsToBounds = YES;
+    [imageView setFrame:self.view.frame];
+    [imageView setContentMode:UIViewContentModeScaleAspectFill];
+    
+    [self.view addSubview:imageView];
+    _mask = imageView;
 }
 
 /*
@@ -41,6 +48,22 @@
 - (void)setViewDidAppearHandler:(SEL) selector :(id) target {
     _onViewDidAppearHandler = selector;
     _onViewDidAppearTarget = target;
+}
+
+- (void)fadeOutMask:(void (^)(void)) onFinish {
+    [UIView animateWithDuration:0.5 animations:^{
+        if (_mask) {
+            _mask.layer.opacity = 0;
+        }
+    } completion:^(BOOL complete){
+        if (_mask) {
+            [_mask removeFromSuperview];
+            _mask = nil;
+        }
+        if (onFinish){
+            onFinish();
+        }
+    }];
 }
 
 - (void)dealloc{

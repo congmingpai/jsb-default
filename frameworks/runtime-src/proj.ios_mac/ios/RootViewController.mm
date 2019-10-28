@@ -61,7 +61,6 @@ return self;
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-    mask = [AppController addLaunchScreenBackground:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -104,19 +103,6 @@ return self;
 //fix not hide status on ios7
 - (BOOL)prefersStatusBarHidden {
     return YES;
-}
-
-- (void)fadeOutMask {
-    [UIView animateWithDuration:0.5 animations:^{
-        if (mask) {
-            mask.layer.opacity = 0;
-        }
-    } completion:^(BOOL complete){
-        if (mask) {
-            [mask removeFromSuperview];
-            mask = nil;
-        }
-    }];
 }
 
 // Controls the application's preferred home indicator auto-hiding when this view controller is shown.

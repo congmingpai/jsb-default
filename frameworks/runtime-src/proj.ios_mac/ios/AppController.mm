@@ -66,7 +66,7 @@ static AppDelegate* s_sharedApplication = nullptr;
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
 
     FirstViewController* firstViewController = [[FirstViewController alloc] init];
-    [firstViewController setViewDidAppearHandler:@selector(onFirstViewDidAppear) :self];
+    [firstViewController setViewDidAppearHandler:@selector(onFirstViewDidAppear:) :self];
 
     // Set RootViewController to window
     [self setRootView:firstViewController];
@@ -97,7 +97,8 @@ static AppDelegate* s_sharedApplication = nullptr;
     }
 }
 
-- (void)onFirstViewDidAppear {
+// 将启动逻辑移至此处，防止iOS启动超过20秒被系统自动杀死
+- (void)onFirstViewDidAppear:(FirstViewController*) firstViewController {
     cocos2d::Application *app = cocos2d::Application::getInstance();
 
     // Initialize the GLView attributes
@@ -109,9 +110,6 @@ static AppDelegate* s_sharedApplication = nullptr;
     // Use RootViewController to manage CCEAGLView
     _viewController = [[RootViewController alloc]init];
     _viewController.wantsFullScreenLayout = YES;
-    
-    // Set RootViewController to window
-    [self setRootView:_viewController];
 
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);
@@ -120,14 +118,11 @@ static AppDelegate* s_sharedApplication = nullptr;
     //run the cocos2d-x game scene
     app->run();
     
-    // 第一次触发此消息时加载游戏
-    // 将启动逻辑移至此处，防止iOS启动超过20秒被系统自动杀死
-//    if (!app->isApplicationLoaded())
-//    {
-        app->applicationOnLoad();
-//    }
+    app->applicationOnLoad();
     
-    [_viewController fadeOutMask];
+    [firstViewController fadeOutMask:^{
+        [self setRootView:_viewController];
+    }];
 }
 
 
@@ -215,17 +210,5 @@ static AppDelegate* s_sharedApplication = nullptr;
     [super dealloc];
 }
 #endif
-
-+(UIImageView*) addLaunchScreenBackground:(UIViewController*) viewController {
-    UIImage* image = [UIImage imageNamed:@"LaunchScreenBackground.png"];
-    UIImageView* imageView = [[UIImageView alloc] init];
-    imageView.image = image;
-    imageView.clipsToBounds = YES;
-    [imageView setFrame:viewController.view.frame];
-    [imageView setContentMode:UIViewContentModeScaleAspectFill];
-    
-    [viewController.view addSubview:imageView];
-    return imageView;
-}
 
 @end
