@@ -12,6 +12,9 @@ main.js
 project.json
 project.manifest
 resources.manifest
+# Android
+.idea/
+.externalNativeBuild/
 
 # frameworks下需要同步的Native代码
 frameworks/*
