@@ -112,8 +112,6 @@ static AppDelegate* s_sharedApplication = nullptr;
     
     // Set RootViewController to window
     [self setRootView:_viewController];
-    
-    [window makeKeyAndVisible];
 
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);
@@ -124,10 +122,10 @@ static AppDelegate* s_sharedApplication = nullptr;
     
     // 第一次触发此消息时加载游戏
     // 将启动逻辑移至此处，防止iOS启动超过20秒被系统自动杀死
-    if (!app->isApplicationLoaded())
-    {
+//    if (!app->isApplicationLoaded())
+//    {
         app->applicationOnLoad();
-    }
+//    }
 }
 
 
