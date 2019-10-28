@@ -24,7 +24,7 @@
     imageView.image = image;
     imageView.clipsToBounds = YES;
     [imageView setFrame:self.view.frame];
-    [imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [imageView setContentMode:UIViewContentModeScaleAspectFill];
     
     [self.view addSubview:imageView];
 }
