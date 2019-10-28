@@ -1128,7 +1128,7 @@
 					"$(SRCROOT)/../Classes/sdks/Bugly/CocosPlugin/agent/iOS/BuglyAgent",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.congmingpai.mobile.dev-test";
+				PRODUCT_BUNDLE_IDENTIFIER = com.congmingpai.mobile.stable;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1169,7 +1169,7 @@
 					"$(SRCROOT)/../Classes/sdks/Bugly/CocosPlugin/agent/iOS/BuglyAgent",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.congmingpai.mobile.dev-test";
+				PRODUCT_BUNDLE_IDENTIFIER = com.congmingpai.mobile.stable;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
