@@ -34,3 +34,12 @@ frameworks/cocos2d-x/*
 frameworks/cocos2d-x/cocos/scripting/*
 !frameworks/cocos2d-x/cocos/scripting/js-bindings/
 frameworks/cocos2d-x/cocos/scripting/js-bindings/*
+!frameworks/cocos2d-x/cocos/scripting/js-bindings/auto/
+!frameworks/cocos2d-x/cocos/scripting/js-bindings/custom/
+!frameworks/cocos2d-x/cocos/scripting/js-bindings/docs/
+!frameworks/cocos2d-x/cocos/scripting/js-bindings/jswrapper/
+!frameworks/cocos2d-x/cocos/scripting/js-bindings/manual/
+!frameworks/cocos2d-x/cocos/scripting/js-bindings/script/
+!frameworks/cocos2d-x/cocos/scripting/js-bindings/proj.ios_mac/
+frameworks/cocos2d-x/cocos/scripting/js-bindings/proj.ios_mac/*
+!frameworks/cocos2d-x/cocos/scripting/js-bindings/proj.ios_mac/project.pbxproj
