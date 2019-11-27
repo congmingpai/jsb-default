@@ -43,3 +43,6 @@ frameworks/cocos2d-x/cocos/scripting/js-bindings/*
 !frameworks/cocos2d-x/cocos/scripting/js-bindings/proj.ios_mac/
 frameworks/cocos2d-x/cocos/scripting/js-bindings/proj.ios_mac/*
 !frameworks/cocos2d-x/cocos/scripting/js-bindings/proj.ios_mac/project.pbxproj
+
+# 移除Android的临时文件（夹）
+frameworks/cocos2d-x/cocos/platform/android/libcocos2dx/build/
