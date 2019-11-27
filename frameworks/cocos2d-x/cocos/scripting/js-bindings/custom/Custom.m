@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "LoggerClient.h"
 
-void log_to_nslogger(const int& level, const char* message)
+void log_to_nslogger(const int& level, const char* format, const char* prefix, const char* content)
 {
-    LogMessage(nil, level, @"%@", [NSString stringWithUTF8String:message]);
+    NSString* message = [NSString stringWithFormat:[NSString stringWithUTF8String:format], [NSString stringWithUTF8String:prefix], [NSString stringWithUTF8String:content]];
+    LogMessage(nil, level, @"%@", message);
 }

@@ -110,10 +110,8 @@ namespace se {
             if ((argc - msgIndex) == 1)
             {
                 std::string msg = args[msgIndex].toStringForce();
-                char message[512] = {};
-                sprintf(message, "JS: %s%s\n", prefix, msg.c_str());
-                SE_LOGD(message);
-                log_to_nslogger(level, message);
+                SE_LOGD("JS: %s%s\n", prefix, msg.c_str());
+                log_to_nslogger(level, "JS: %@%@\n", prefix, msg.c_str());
             }
             else if (argc > 1)
             {
@@ -131,11 +129,9 @@ namespace se {
                         msg += " " + args[i].toStringForce();
                     }
                 }
-
-                char message[512] = {};
-                sprintf(message, "JS: %s%s\n", prefix, msg.c_str());
-                SE_LOGD(message);
-                log_to_nslogger(level, message);
+                
+                SE_LOGD("JS: %s%s\n", prefix, msg.c_str());
+                log_to_nslogger(level, "JS: %@%@\n", prefix, msg.c_str());
             }
 
             return true;

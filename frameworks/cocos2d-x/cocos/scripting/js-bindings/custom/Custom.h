@@ -26,4 +26,4 @@
 // Level 3: network responses, datas and images…
 // Level 4: really not important stuff.
 
-void log_to_nslogger(const int& level, const char* message);
+void log_to_nslogger(const int& level, const char* format, const char* prefix, const char* content);
