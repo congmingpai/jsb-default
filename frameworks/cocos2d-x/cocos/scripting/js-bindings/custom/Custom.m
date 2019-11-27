@@ -6,9 +6,10 @@
 //
 
 #include "Custom.h"
-#import "NSLogger.h"
+#import <Foundation/Foundation.h>
+#import "LoggerClient.h"
 
-void log_to_nslogger(const char* message)
+void log_to_nslogger(const int& level, const char* message)
 {
-    NSLog(0, 0, 0, 0, 0, message);
+    LogMessage(nil, level, @"%@", [NSString stringWithUTF8String:message]);
 }

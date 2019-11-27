@@ -100,7 +100,7 @@ namespace se {
         Value __oldConsoleAssert;
 
 
-        bool JSB_console_format_log(State& s, const char* prefix, int msgIndex = 0)
+        bool JSB_console_format_log(State& s, const int& level, const char* prefix, int msgIndex = 0)
         {
             if (msgIndex < 0)
                 return false;
@@ -113,7 +113,7 @@ namespace se {
                 char message[512] = {};
                 sprintf(message, "JS: %s%s\n", prefix, msg.c_str());
                 SE_LOGD(message);
-                log_to_nslogger(message);
+                log_to_nslogger(level, message);
             }
             else if (argc > 1)
             {
@@ -135,7 +135,7 @@ namespace se {
                 char message[512] = {};
                 sprintf(message, "JS: %s%s\n", prefix, msg.c_str());
                 SE_LOGD(message);
-                log_to_nslogger(message);
+                log_to_nslogger(level, message);
             }
 
             return true;
@@ -143,7 +143,7 @@ namespace se {
 
         bool JSB_console_log(State& s)
         {
-            JSB_console_format_log(s, "");
+            JSB_console_format_log(s, CUSTOM_LOG_LEVEL_INFO, "");
             __oldConsoleLog.toObject()->call(s.args(), __consoleVal.toObject());
             return true;
         }
@@ -151,7 +151,7 @@ namespace se {
 
         bool JSB_console_debug(State& s)
         {
-            JSB_console_format_log(s, "[DEBUG]: ");
+            JSB_console_format_log(s, CUSTOM_LOG_LEVEL_INFO, "[DEBUG]: ");
             __oldConsoleDebug.toObject()->call(s.args(), __consoleVal.toObject());
             return true;
         }
@@ -159,7 +159,7 @@ namespace se {
 
         bool JSB_console_info(State& s)
         {
-            JSB_console_format_log(s, "[INFO]: ");
+            JSB_console_format_log(s, CUSTOM_LOG_LEVEL_INFO, "[INFO]: ");
             __oldConsoleInfo.toObject()->call(s.args(), __consoleVal.toObject());
             return true;
         }
@@ -167,7 +167,7 @@ namespace se {
 
         bool JSB_console_warn(State& s)
         {
-            JSB_console_format_log(s, "[WARN]: ");
+            JSB_console_format_log(s, CUSTOM_LOG_LEVEL_WARN, "[WARN]: ");
             __oldConsoleWarn.toObject()->call(s.args(), __consoleVal.toObject());
             return true;
         }
@@ -175,7 +175,7 @@ namespace se {
 
         bool JSB_console_error(State& s)
         {
-            JSB_console_format_log(s, "[ERROR]: ");
+            JSB_console_format_log(s, CUSTOM_LOG_LEVEL_ERROR, "[ERROR]: ");
             __oldConsoleError.toObject()->call(s.args(), __consoleVal.toObject());
             return true;
         }
@@ -188,7 +188,7 @@ namespace se {
             {
                 if (args[0].isBoolean() && !args[0].toBoolean())
                 {
-                    JSB_console_format_log(s, "[ASSERT]: ", 1);
+                    JSB_console_format_log(s, CUSTOM_LOG_LEVEL_ERROR, "[ASSERT]: ", 1);
                     __oldConsoleAssert.toObject()->call(s.args(), __consoleVal.toObject());
                 }
             }
