@@ -294,13 +294,13 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-fix/build/jsb-default.stable/frameworks/runtime-src/proj.android-studio/app/libs/bugly_crash_release.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-fix/build/jsb-default.stable/frameworks/runtime-src/proj.android-studio/app/libs/bugly_agent.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-full/build/jsb-default.stable/frameworks/runtime-src/proj.android-studio/app/libs/bugly_crash_release.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-full/build/jsb-default.stable/frameworks/runtime-src/proj.android-studio/app/libs/bugly_agent.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-fix/build/jsb-default.stable/frameworks/cocos2d-x/cocos/platform/android/java/libs/android-async-http-1.4.9.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-fix/build/jsb-default.stable/frameworks/cocos2d-x/cocos/platform/android/java/libs/libcocosanalytics.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-fix/build/jsb-default.stable/frameworks/cocos2d-x/cocos/platform/android/java/libs/com.android.vending.expansion.zipfile.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-fix/build/jsb-default.stable/frameworks/cocos2d-x/cocos/platform/android/java/libs/httpclient-4.4.1.1.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-full/build/jsb-default.stable/frameworks/cocos2d-x/cocos/platform/android/java/libs/android-async-http-1.4.9.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-full/build/jsb-default.stable/frameworks/cocos2d-x/cocos/platform/android/java/libs/libcocosanalytics.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-full/build/jsb-default.stable/frameworks/cocos2d-x/cocos/platform/android/java/libs/com.android.vending.expansion.zipfile.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhujialing/Documents/GitHub/smartpi-cocos-full/build/jsb-default.stable/frameworks/cocos2d-x/cocos/platform/android/java/libs/httpclient-4.4.1.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.tencent.bugly:nativecrashreport:3.6.0@aar" level="project" />
     <orderEntry type="module" module-name="libcocos2dx" />
   </component>
