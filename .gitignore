@@ -46,3 +46,5 @@ frameworks/cocos2d-x/cocos/scripting/js-bindings/proj.ios_mac/*
 
 # 移除Android的临时文件（夹）
 frameworks/cocos2d-x/cocos/platform/android/libcocos2dx/build/
+frameworks/cocos2d-x/cocos/platform/android/libcocos2dx/libcocos2dx.iml
+frameworks/runtime-src/proj.android-studio/app/Smart_Pi.iml
