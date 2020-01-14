@@ -11,7 +11,6 @@
 #define PicturePicker_h
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include <functional>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIViewController.h>
 
