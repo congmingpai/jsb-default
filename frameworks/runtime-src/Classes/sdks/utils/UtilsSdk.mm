@@ -7,11 +7,15 @@
 
 #include "UtilsSdk.h"
 #include "SdkManager.h"
+#include "scripting/js-bindings/manual/jsb_conversions.hpp"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #import <sys/sysctl.h>
 #import <mach/mach.h>
 #import "Reachability.h"
+#import <AVFoundation/AVFoundation.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/Photos.h>
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -23,6 +27,8 @@
 #ifdef SDK_BUGLY
 #include "Bugly/CocosPlugin/bugly/CrashReport.h"
 #endif
+
+#include "pictures/PicturePicker.h"
 
 USING_NS_CC;
 
@@ -91,6 +97,9 @@ void UtilsSdk::call(const std::string &method, const std::string &params, const 
         callback("");
     }
 #endif
+    else if ("takePhoto" == method || "pickPhoto" == method || "takeOrPickPhoto" == method){
+        this->takeOrPickPhoto(method, params, callback);
+    }
     else {
         callback("");
     }
@@ -364,3 +373,62 @@ void UtilsSdk::setBuglyUserData(const std::string& params)
     }
 }
 #endif
+
+void UtilsSdk::takeOrPickPhoto(const std::string& method, const std::string& path, const SdkCallback &callback)
+{
+    char buffer[128] = {};
+    sprintf(buffer, "%lld", (long long)([[NSDate date] timeIntervalSince1970] * 1000));
+    std::string key = std::string(buffer) + ":takePhoto";
+    auto finder = _callbacks.find(key);
+    if (_callbacks.end() != finder)
+    {
+        SE_REPORT_ERROR("key [%s] for callback already exists!", key.c_str());
+        callback("");
+        return;
+    }
+    _callbacks[key] = callback;
+    
+    FileUtils::getInstance()->createDirectory(path);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    PicturePicker* picker = [[PicturePicker alloc] initWithKey:[NSString stringWithUTF8String:key.c_str()] :this];
+#endif
+    if ("takeOrPickPhoto" == method)
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        [picker takeOrPickPhoto:[NSString stringWithUTF8String:(path + "/" + buffer + ".png").c_str()]];
+#endif
+    }
+    else if ("takePhoto" == method)
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        [picker takePhoto:[NSString stringWithUTF8String:(path + "/" + buffer + ".png").c_str()]];
+#endif
+    }
+    else if ("pickPhoto" == method)
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        [picker pickPhoto:[NSString stringWithUTF8String:(path + "/" + buffer + ".png").c_str()]];
+#endif
+    }
+}
+
+void UtilsSdk::callbackToMainThread(const std::string key, const std::string argument)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    dispatch_async(dispatch_get_main_queue(), ^{
+        this->invoke(key, argument);
+    });
+#endif
+}
+
+void UtilsSdk::invoke(const std::string& key, const std::string& argument)
+{
+    auto finder = _callbacks.find(key);
+    if (_callbacks.end() != finder)
+    {
+        SdkCallback& callback = finder->second;
+        callback(argument);
+        _callbacks.erase(finder);
+    }
+}
