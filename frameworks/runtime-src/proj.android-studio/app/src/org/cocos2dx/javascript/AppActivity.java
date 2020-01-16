@@ -148,4 +148,9 @@ public class AppActivity extends Cocos2dxActivity implements Thread.UncaughtExce
             mDefaultExceptionHandler.uncaughtException(thread, ex);
         }
     }
+
+    static public void takeOrPickPhoto(String method)
+    {
+
+    }
 }

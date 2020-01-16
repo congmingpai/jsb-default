@@ -514,6 +514,7 @@ public:
     void setCullingEnabled (bool enable) { _isCullingEnabled = enable; }
     bool isCullingEnabled () const { return _isCullingEnabled; }
 
+    void runInNextUpdate(std::function<void()> method);
 protected:
     void reset();
     
@@ -636,7 +637,9 @@ protected:
     friend class GLView;
     
     bool _isCullingEnabled;
-    
+
+    // 为实现拍照功能而添加，JAVA层的拍照功能在子线程中完成，而V8不允许跨线程调用Isolate，无法直接执行回调函数，因此添加此缓存，待下一帧执行。
+    std::list<std::function<void()>> _cachedFunctionsNextUpdate;
 private:
     /**
      Use std::vector to implement a quick matrix stack.

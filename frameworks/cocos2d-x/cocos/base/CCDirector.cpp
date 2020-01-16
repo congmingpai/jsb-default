@@ -1437,6 +1437,18 @@ void Director::mainLoop()
     }
     else if (! _invalid)
     {
+        // version: 1.55.0
+        // reason: 为实现拍照功能而添加，JAVA层的拍照功能在子线程中完成，而V8不允许跨线程调用Isolate，无法直接执行回调函数，因此添加此缓存，待下一帧执行。
+        if (_cachedFunctionsNextUpdate.size())
+        {
+            for (auto iterator : _cachedFunctionsNextUpdate)
+            {
+                std::function<void()> method = iterator;
+                method();
+            }
+            _cachedFunctionsNextUpdate.clear();
+        }
+        
         drawScene();
 
         // release the objects
@@ -1457,6 +1469,11 @@ void Director::setAnimationInterval(float interval)
         stopAnimation();
         startAnimation();
     }
+}
+
+void Director::runInNextUpdate(std::function<void ()> method)
+{
+    _cachedFunctionsNextUpdate.push_back(method);
 }
 
 NS_CC_END

@@ -1,23 +1,23 @@
 //
-//  PicturePicker.m
+//  PhotoPicker.mm
 //  Smart_Pi-mobile
 //
 //  Created by 朱嘉灵 on 2020/1/14.
 //
 
-#import "PicturePicker.h"
+#import "PhotoPicker.h"
 #include "../UtilsSdk.h"
 #pragma mark - 01.使用相机相册要导入头文件的
 #import <AVFoundation/AVFoundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <Photos/Photos.h>
 
-@interface PicturePicker ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface PhotoPicker ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 #pragma mark - 02.拖线一个imageView控件用来展示选中的图片 & 创建一个弹框;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @end
 
-@implementation PicturePicker
+@implementation PhotoPicker
 #pragma mark - 03.懒加载初始化弹框;
 - (UIImagePickerController *)imagePickerController {
     if (_imagePickerController == nil) {
@@ -30,11 +30,11 @@
 
 - (id)initWithKey:(NSString*)key :(void*)owner {
     self = [super init];
-    
+
     _key = [NSString stringWithString:key];
     [_key retain];
     _owner = owner;
-    
+
     UIWindow *window = [[UIApplication sharedApplication].delegate window];
     _viewController = [window rootViewController];
 
@@ -80,7 +80,7 @@
 {
     _filename = [NSString stringWithString:filename];
     [_filename retain];
-    
+
     [self checkCameraPermission];
 }
 
@@ -116,7 +116,7 @@
 {
     _filename = [NSString stringWithString:filename];
     [_filename retain];
-    
+
     [self checkAlbumPermission];
 }
 

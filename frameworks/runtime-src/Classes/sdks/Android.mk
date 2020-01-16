@@ -19,6 +19,7 @@ LOCAL_SRC_FILES := SdkManager.cpp \
                    Bugly/BuglySdk.cpp \
                    wechat/WechatSdk.mm \
                    hash/HashSdk.cpp \
+                   utils/photos/PhotoPicker.cpp \
 
 LOCAL_CPP_EXTENSION := .mm .cpp .cc
 

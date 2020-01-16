@@ -7,7 +7,6 @@
 
 #include "UtilsSdk.h"
 #include "SdkManager.h"
-#include "scripting/js-bindings/manual/jsb_conversions.hpp"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #import <sys/sysctl.h>
@@ -21,6 +20,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <jni.h>
 #include "platform/android/jni/JniHelper.h"
+#include <sys/time.h>
 #define CLASS_NAME "org/cocos2dx/javascript/UtilsSdk"
 #endif
 
@@ -28,7 +28,7 @@
 #include "Bugly/CocosPlugin/bugly/CrashReport.h"
 #endif
 
-#include "pictures/PicturePicker.h"
+#include "utils/photos/PhotoPicker.h"
 
 USING_NS_CC;
 
@@ -377,12 +377,21 @@ void UtilsSdk::setBuglyUserData(const std::string& params)
 void UtilsSdk::takeOrPickPhoto(const std::string& method, const std::string& path, const SdkCallback &callback)
 {
     char buffer[128] = {};
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     sprintf(buffer, "%lld", (long long)([[NSDate date] timeIntervalSince1970] * 1000));
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    time_t current;
+    time(&current);
+    sprintf(buffer, "%lld", (long long)current);
+#endif
     std::string key = std::string(buffer) + ":takePhoto";
     auto finder = _callbacks.find(key);
     if (_callbacks.end() != finder)
     {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         SE_REPORT_ERROR("key [%s] for callback already exists!", key.c_str());
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#endif
         callback("");
         return;
     }
@@ -391,24 +400,32 @@ void UtilsSdk::takeOrPickPhoto(const std::string& method, const std::string& pat
     FileUtils::getInstance()->createDirectory(path);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    PicturePicker* picker = [[PicturePicker alloc] initWithKey:[NSString stringWithUTF8String:key.c_str()] :this];
+    PhotoPicker* picker = [[PhotoPicker alloc] initWithKey:[NSString stringWithUTF8String:key.c_str()] :this];
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    PhotoPicker* picker = new PhotoPicker(key, this);
 #endif
     if ("takeOrPickPhoto" == method)
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         [picker takeOrPickPhoto:[NSString stringWithUTF8String:(path + "/" + buffer + ".png").c_str()]];
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        picker->takeOrPickPhoto(path + "/" + buffer + ".png");
 #endif
     }
     else if ("takePhoto" == method)
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         [picker takePhoto:[NSString stringWithUTF8String:(path + "/" + buffer + ".png").c_str()]];
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        picker->takePhoto(path + "/" + buffer + ".png");
 #endif
     }
     else if ("pickPhoto" == method)
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         [picker pickPhoto:[NSString stringWithUTF8String:(path + "/" + buffer + ".png").c_str()]];
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        picker->pickPhoto(path + "/" + buffer + ".png");
 #endif
     }
 }
@@ -419,6 +436,13 @@ void UtilsSdk::callbackToMainThread(const std::string key, const std::string arg
     dispatch_async(dispatch_get_main_queue(), ^{
         this->invoke(key, argument);
     });
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // 安卓系统中似乎没有原生的方式进行任务的线程间同步，资料显示可以通过libuv中uv_async_send实现，因需要添加第三方库，故未尝试。
+    Director::getInstance()->runInNextUpdate(
+        [=]
+        {
+            this->invoke(key, argument);
+        });
 #endif
 }
 
