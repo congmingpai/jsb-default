@@ -27,6 +27,9 @@ public class PhotoPicker extends Activity {
     static final String KEY_INSTANCE = "instance";
     static final String KEY_FILENAME = "filename";
 
+    static final int PERMISSION_TAKE = 1;
+    static final int PERMISSION_PICK = 2;
+
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int REQUEST_PICK_PHOTO = 2;
 
@@ -68,7 +71,7 @@ public class PhotoPicker extends Activity {
         if (PackageManager.PERMISSION_GRANTED == oldStatus) {
             return true;
         }
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_TAKE);
         return false;
     }
 
@@ -91,8 +94,12 @@ public class PhotoPicker extends Activity {
     }
 
     private boolean checkAlbumPermission() {
-        // 似乎不需要申请权限
-        return true;
+        int oldStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (PackageManager.PERMISSION_GRANTED == oldStatus) {
+            return true;
+        }
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_PICK);
+        return false;
     }
 
     private void pickPhoto(){
@@ -105,9 +112,12 @@ public class PhotoPicker extends Activity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         for (int i = 0; i < permissions.length; ++i) {
-            switch (permissions[i]) {
-                case Manifest.permission.CAMERA:
+            switch (requestCode) {
+                case PERMISSION_TAKE:
                     this.takePhoto();
+                    break;
+                case PERMISSION_PICK:
+                    this.pickPhoto();
                     break;
             }
         }
