@@ -87,6 +87,10 @@ void UtilsSdk::call(const std::string &method, const std::string &params, const 
         NetworkType type = getNetworkType();
         callback(int32tostring(type));
     }
+    else if(method == "getIOSProcessMemoryUsage") {
+      unsigned long long size = getIOSProcessMemoryUsage();
+      callback(uint64tostring(size));
+    }
 #ifdef SDK_BUGLY
     else if(method == "setBuglyUserID") {
         setBuglyUserID(params);
@@ -152,6 +156,24 @@ unsigned long long UtilsSdk::getAvailableMemorySize()
     }
 #endif
     return 0;
+}
+
+unsigned long long UtilsSdk::getIOSProcessMemoryUsage() {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+  task_vm_info info;
+  mach_msg_type_number_t count = TASK_VM_INFO_COUNT;
+  int r = task_info(mach_task_self(), TASK_VM_INFO, (task_info_t)&info, &count);
+    if (r == KERN_SUCCESS)
+    {
+        NSLog(@"Memory: %ldd", (unsigned long) info.phys_footprint);
+        return info.phys_footprint;
+    }
+    else
+    {
+        return -1;
+    }
+#endif
+  return 0;
 }
 
 unsigned long long UtilsSdk::getFileSystemTotalSize()
