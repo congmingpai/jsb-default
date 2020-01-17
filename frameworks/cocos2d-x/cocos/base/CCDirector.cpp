@@ -1437,6 +1437,7 @@ void Director::mainLoop()
     }
     else if (! _invalid)
     {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         // version: 1.55.0
         // reason: 为实现拍照功能而添加，JAVA层的拍照功能在子线程中完成，而V8不允许跨线程调用Isolate，无法直接执行回调函数，因此添加此缓存，待下一帧执行。
         //         已通过Context.runOnUIThread和主线程创建Handler尝试，无效。
@@ -1449,6 +1450,7 @@ void Director::mainLoop()
             }
             _cachedFunctionsNextUpdate.clear();
         }
+#endif
         
         drawScene();
 
@@ -1472,10 +1474,12 @@ void Director::setAnimationInterval(float interval)
     }
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 void Director::runInNextUpdate(std::function<void ()> method)
 {
     _cachedFunctionsNextUpdate.push_back(method);
 }
+#endif
 
 NS_CC_END
 

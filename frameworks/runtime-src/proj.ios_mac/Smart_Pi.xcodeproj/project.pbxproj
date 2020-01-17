@@ -120,7 +120,7 @@
 		DEFCD3C121D1E13E00A872C6 /* hl_sha384wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEFCD39121D1E13E00A872C6 /* hl_sha384wrapper.cpp */; };
 		DEFCD3C421D1E18700A872C6 /* HashSdk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEFCD3C221D1E18700A872C6 /* HashSdk.cpp */; };
 		DEFCD3C521D1E18700A872C6 /* HashSdk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEFCD3C221D1E18700A872C6 /* HashSdk.cpp */; };
-		E20D6CC423CD911900DBFC39 /* PicturePicker.mm in Sources */ = {isa = PBXBuildFile; fileRef = E20D6CC323CD911900DBFC39 /* PicturePicker.mm */; };
+		E20825B523D171DC00D373E2 /* PhotoPicker.mm in Sources */ = {isa = PBXBuildFile; fileRef = E20825B323D171DB00D373E2 /* PhotoPicker.mm */; };
 		E20D6CC723CD972B00DBFC39 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E20D6CC623CD972B00DBFC39 /* Photos.framework */; };
 		E2735178215492D700BCBE60 /* courses in Resources */ = {isa = PBXBuildFile; fileRef = E2735177215492D700BCBE60 /* courses */; };
 		E285AE8B2154E017008821D8 /* project.manifest in Resources */ = {isa = PBXBuildFile; fileRef = E285AE8A2154E017008821D8 /* project.manifest */; };
@@ -322,8 +322,8 @@
 		DEFCD39121D1E13E00A872C6 /* hl_sha384wrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hl_sha384wrapper.cpp; sourceTree = "<group>"; };
 		DEFCD3C221D1E18700A872C6 /* HashSdk.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HashSdk.cpp; sourceTree = "<group>"; };
 		DEFCD3C321D1E18700A872C6 /* HashSdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HashSdk.h; sourceTree = "<group>"; };
-		E20D6CC323CD911900DBFC39 /* PicturePicker.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = PicturePicker.mm; sourceTree = "<group>"; };
-		E20D6CC523CD914700DBFC39 /* PicturePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PicturePicker.h; sourceTree = "<group>"; };
+		E20825B323D171DB00D373E2 /* PhotoPicker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PhotoPicker.mm; sourceTree = "<group>"; };
+		E20825B423D171DB00D373E2 /* PhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPicker.h; sourceTree = "<group>"; };
 		E20D6CC623CD972B00DBFC39 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/Frameworks/Photos.framework; sourceTree = DEVELOPER_DIR; };
 		E2735177215492D700BCBE60 /* courses */ = {isa = PBXFileReference; lastKnownFileType = folder; name = courses; path = ../../../courses; sourceTree = "<group>"; };
 		E285AE8A2154E017008821D8 /* project.manifest */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = project.manifest; path = ../../../project.manifest; sourceTree = "<group>"; };
@@ -689,7 +689,7 @@
 		DE4883DD20FDB31F006717A2 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				E20D6CC223CD90B500DBFC39 /* pictures */,
+				E20D6CC223CD90B500DBFC39 /* photos */,
 				DE4883DE20FDB31F006717A2 /* UtilsSdk.h */,
 				DE4883DF20FDB31F006717A2 /* UtilsSdk.mm */,
 			);
@@ -767,13 +767,13 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		E20D6CC223CD90B500DBFC39 /* pictures */ = {
+		E20D6CC223CD90B500DBFC39 /* photos */ = {
 			isa = PBXGroup;
 			children = (
-				E20D6CC523CD914700DBFC39 /* PicturePicker.h */,
-				E20D6CC323CD911900DBFC39 /* PicturePicker.mm */,
+				E20825B423D171DB00D373E2 /* PhotoPicker.h */,
+				E20825B323D171DB00D373E2 /* PhotoPicker.mm */,
 			);
-			path = pictures;
+			path = photos;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -961,7 +961,6 @@
 				509D4AC917EBB2AB00697056 /* RootViewController.mm in Sources */,
 				DE6EEB5621D36CBB00FA65AE /* SettingsBundleHelper.cpp in Sources */,
 				DE36599F20FF29DB00D046A0 /* BuglySdk.cpp in Sources */,
-				E20D6CC423CD911900DBFC39 /* PicturePicker.mm in Sources */,
 				DE10A5D720CFFB4A00B856E3 /* WXApiResponseHandler.m in Sources */,
 				DE36599720FF29DB00D046A0 /* CrashReport.mm in Sources */,
 				DEFCD3B421D1E13E00A872C6 /* hl_sha1wrapper.cpp in Sources */,
@@ -984,6 +983,7 @@
 				DECED05A20F8B5F0000DC6B7 /* Reachability.m in Sources */,
 				DE10A5A520CFC37400B856E3 /* SdkManager.cpp in Sources */,
 				4D3EB2581F8F4A6C007DA644 /* jsb_module_register.cpp in Sources */,
+				E20825B523D171DC00D373E2 /* PhotoPicker.mm in Sources */,
 				DE10A5DA20CFFB4A00B856E3 /* SendMessageToWXReq+requestWithTextOrMediaMessage.m in Sources */,
 				DEFCD3B821D1E13E00A872C6 /* hl_sha256.cpp in Sources */,
 				DECED06120F8BC08000DC6B7 /* ReachabilitySdk.mm in Sources */,

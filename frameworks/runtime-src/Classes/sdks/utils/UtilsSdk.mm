@@ -389,7 +389,7 @@ void UtilsSdk::takeOrPickPhoto(const std::string& method, const std::string& pat
     if (_callbacks.end() != finder)
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        SE_REPORT_ERROR("key [%s] for callback already exists!", key.c_str());
+//        SE_REPORT_ERROR("key [%s] for callback already exists!", key.c_str());
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #endif
         callback("");

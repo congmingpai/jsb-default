@@ -513,8 +513,10 @@ public:
     
     void setCullingEnabled (bool enable) { _isCullingEnabled = enable; }
     bool isCullingEnabled () const { return _isCullingEnabled; }
-
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     void runInNextUpdate(std::function<void()> method);
+#endif
 protected:
     void reset();
     
@@ -638,8 +640,10 @@ protected:
     
     bool _isCullingEnabled;
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // 为实现拍照功能而添加，JAVA层的拍照功能在子线程中完成，而V8不允许跨线程调用Isolate，无法直接执行回调函数，因此添加此缓存，待下一帧执行。
     std::list<std::function<void()>> _cachedFunctionsNextUpdate;
+#endif
 private:
     /**
      Use std::vector to implement a quick matrix stack.
