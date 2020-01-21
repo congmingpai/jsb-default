@@ -13,7 +13,7 @@ using namespace cocos2d;
 
 extern "C"
 {
-    void Java_org_cocos2dx_javascript_PhotoPicker_response(JNIEnv *env, jobject thiz, long long handle, jstring jFilename)
+    void Java_com_congmingpai_mobile_PhotoPicker_response(JNIEnv *env, jobject thiz, long long handle, jstring jFilename)
     {
         cocos2d::log("Java_org_cocos2dx_javascript_PhotoPicker_response");
         PhotoPicker* picker = reinterpret_cast<PhotoPicker*>(handle);
@@ -43,7 +43,7 @@ void PhotoPicker::pickPhoto(const std::string &filename)
 void PhotoPicker::callActivity(const std::string &method)
 {
     JniMethodInfo minfo;
-    if (JniHelper::getStaticMethodInfo(minfo, "org/cocos2dx/javascript/PhotoPicker", "takeOrPickPhoto", "(JLjava/lang/String;Ljava/lang/String;)V")) {
+    if (JniHelper::getStaticMethodInfo(minfo, "com/congmingpai/mobile/PhotoPicker", "takeOrPickPhoto", "(JLjava/lang/String;Ljava/lang/String;)V")) {
         jlong instance = reinterpret_cast<jlong>(this);
         JNIEnv* env = JniHelper::getEnv();
         jstring jMethod = env->NewStringUTF(method.c_str());
@@ -57,5 +57,5 @@ void PhotoPicker::callActivity(const std::string &method)
 void PhotoPicker::response(const std::string &filename)
 {
     UtilsSdk* utils = reinterpret_cast<UtilsSdk*>(_owner);
-    utils->callbackToMainThread(_key, filename);
+    utils->invokeCallbackOnMainThread(_key, filename);
 }

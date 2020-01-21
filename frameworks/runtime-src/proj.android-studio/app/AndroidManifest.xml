@@ -41,7 +41,7 @@
         <!-- 添加FileProvider以保存相机拍摄的结果，否则无法保存文件，安卓相机拍摄结果为缩略图，非原图，7.0以上系统只允许在应用内部使用[file://]uri -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.congmingpai.mobild.fileprovider"
+            android:authorities="@string/fileprovider_authorities"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -63,10 +63,10 @@
         </activity>
 
         <activity
-            android:name="org.cocos2dx.javascript.PhotoPicker"
+            android:name="com.congmingpai.mobile.PhotoPicker"
             android:screenOrientation="sensorLandscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" >
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
         </activity>
 
         <!-- WechatSDK Begin -->

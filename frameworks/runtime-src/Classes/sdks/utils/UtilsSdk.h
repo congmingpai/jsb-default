@@ -46,12 +46,14 @@ public:
     static void setBuglyUserID(const std::string &id);
     static void setBuglyUserData(const std::string &params);
     #endif
-    
+
+    std::string getTimestamp();
+
     void takeOrPickPhoto(const std::string& method, const std::string& path, const SdkCallback &callback);
 
     // 将结果同步至主线程中进行处理
-    void callbackToMainThread(const std::string key, const std::string argument);
-    void invoke(const std::string& key, const std::string& argument);
+    void invokeCallbackOnMainThread(const std::string key, const std::string argument);
+    void invokeCallback(const std::string &key, const std::string &argument);
 };
 
 #endif /* UtilsSdk_hpp */

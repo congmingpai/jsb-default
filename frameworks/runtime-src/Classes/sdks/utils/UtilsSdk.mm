@@ -396,7 +396,7 @@ void UtilsSdk::setBuglyUserData(const std::string& params)
 }
 #endif
 
-void UtilsSdk::takeOrPickPhoto(const std::string& method, const std::string& path, const SdkCallback &callback)
+std::string UtilsSdk::getTimestamp()
 {
     char buffer[128] = {};
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -406,53 +406,55 @@ void UtilsSdk::takeOrPickPhoto(const std::string& method, const std::string& pat
     time(&current);
     sprintf(buffer, "%lld", (long long)current);
 #endif
-    std::string key = std::string(buffer) + ":takePhoto";
+    return buffer;
+}
+
+void UtilsSdk::takeOrPickPhoto(const std::string& method, const std::string& path, const SdkCallback &callback)
+{
+    std::string timestamp = this->getTimestamp();
+    std::string key = std::string(timestamp) + ":" + method;
     auto finder = _callbacks.find(key);
     if (_callbacks.end() != finder)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//        SE_REPORT_ERROR("key [%s] for callback already exists!", key.c_str());
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#endif
         callback("");
         return;
     }
     _callbacks[key] = callback;
-    
+
     FileUtils::getInstance()->createDirectory(path);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     PhotoPicker* picker = [[PhotoPicker alloc] initWithKey:[NSString stringWithUTF8String:key.c_str()] :this];
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    PhotoPicker* picker = new PhotoPicker(key, this);
-#endif
     if ("takeOrPickPhoto" == method)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        [picker takeOrPickPhoto:[NSString stringWithUTF8String:(path + "/" + buffer + ".png").c_str()]];
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        picker->takeOrPickPhoto(path + "/" + buffer + ".png");
-#endif
+        [picker takeOrPickPhoto:[NSString stringWithUTF8String:(path + "/" + timestamp + ".png").c_str()]];
     }
     else if ("takePhoto" == method)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        [picker takePhoto:[NSString stringWithUTF8String:(path + "/" + buffer + ".png").c_str()]];
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        picker->takePhoto(path + "/" + buffer + ".png");
-#endif
+        [picker takePhoto:[NSString stringWithUTF8String:(path + "/" + timestamp + ".png").c_str()]];
     }
     else if ("pickPhoto" == method)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        [picker pickPhoto:[NSString stringWithUTF8String:(path + "/" + buffer + ".png").c_str()]];
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        picker->pickPhoto(path + "/" + buffer + ".png");
-#endif
+        [picker pickPhoto:[NSString stringWithUTF8String:(path + "/" + timestamp + ".png").c_str()]];
     }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    PhotoPicker* picker = new PhotoPicker(key, this);
+    if ("takeOrPickPhoto" == method)
+    {
+        picker->takeOrPickPhoto(path + "/" + timestamp + ".png");
+    }
+    else if ("takePhoto" == method)
+    {
+        picker->takePhoto(path + "/" + timestamp + ".png");
+    }
+    else if ("pickPhoto" == method)
+    {
+        picker->pickPhoto(path + "/" + timestamp + ".png");
+    }
+#endif
 }
 
-void UtilsSdk::callbackToMainThread(const std::string key, const std::string argument)
+void UtilsSdk::invokeCallbackOnMainThread(const std::string key, const std::string argument)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -463,12 +465,12 @@ void UtilsSdk::callbackToMainThread(const std::string key, const std::string arg
     Director::getInstance()->runInNextUpdate(
         [=]
         {
-            this->invoke(key, argument);
+            this->invokeCallback(key, argument);
         });
 #endif
 }
 
-void UtilsSdk::invoke(const std::string& key, const std::string& argument)
+void UtilsSdk::invokeCallback(const std::string &key, const std::string &argument)
 {
     auto finder = _callbacks.find(key);
     if (_callbacks.end() != finder)
