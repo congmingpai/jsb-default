@@ -38,7 +38,12 @@ public class Camera extends CameraDevice.StateCallback {
     private Bitmap mResult = null;
     public Bitmap getResult() { return mResult; }
 
+//    private boolean mCaptured = false;
+
+    private Camera mSelf = null;
+
     public Camera(@NonNull Context owner, @NonNull SurfaceHolder target, @NonNull Callback callback){
+        mSelf = this;
         mOwner = owner;
         mTarget = target;
         mCallback = callback;
@@ -74,7 +79,7 @@ public class Camera extends CameraDevice.StateCallback {
             return true;
         } catch (CameraAccessException e) {
             e.printStackTrace();
-            mCallback.response(null);
+            mSelf.response(null);
         }
         return false;
     }
@@ -91,7 +96,7 @@ public class Camera extends CameraDevice.StateCallback {
             mCaptureSession.capture(requestBuilder.build(), mCaptureCallback, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
-            mCallback.response(null);
+            mSelf.response(null);
             return false;
         }
         return true;
@@ -107,21 +112,27 @@ public class Camera extends CameraDevice.StateCallback {
                 mCaptureSession = session;
             } catch (CameraAccessException e) {
                 e.printStackTrace();
-                mCallback.response(null);
+                mSelf.response(null);
             }
         }
 
         @Override
         public void onConfigureFailed(@NonNull CameraCaptureSession session) {
-            mCallback.response(null);
+            mSelf.response(null);
         }
     };
 
     private CameraCaptureSession.CaptureCallback mCaptureCallback = new CameraCaptureSession.CaptureCallback() {
         @Override
+        public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
+            super.onCaptureCompleted(session, request, result);
+//            mCaptured = true;
+        }
+
+        @Override
         public void onCaptureFailed(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull CaptureFailure failure) {
             super.onCaptureFailed(session, request, failure);
-            mCallback.response(null);
+            mSelf.response(null);
         }
     };
 
@@ -144,7 +155,7 @@ public class Camera extends CameraDevice.StateCallback {
                 e.printStackTrace();
             }
             mResult = bitmap;
-            mCallback.response(bitmap);
+            mSelf.response(bitmap);
         }
     };
 
@@ -169,7 +180,7 @@ public class Camera extends CameraDevice.StateCallback {
             mCameraDevice.createCaptureSession(surfaces, mStateCallback, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
-            mCallback.response(null);
+            mSelf.response(null);
         }
     }
 
@@ -182,11 +193,29 @@ public class Camera extends CameraDevice.StateCallback {
 
     @Override
     public void onDisconnected(@NonNull CameraDevice camera) {
-
+        // 以下三种情况会触发此事件：
+        // 1. 启动相机之后，其他应用占用相机
+        // 2. 启动相机之后，再次启动相机
+        // 3. 主动释放相机
+//        if (!mCaptured) {
+//            mSelf.response(null);
+//        }
     }
 
     @Override
     public void onError(@NonNull CameraDevice camera, int error) {
+        Log.e("General custom camera", String.format("CameraDevice error : %d", error));
+        mSelf.response(null);
+    }
 
+    private void response(@Nullable Bitmap bitmap) {
+        mCallback.response(bitmap);
+    }
+
+    public void Release() {
+        if (null != mCameraDevice) {
+            mCameraDevice.close();
+            mCameraDevice = null;
+        }
     }
 }

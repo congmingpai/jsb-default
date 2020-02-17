@@ -139,12 +139,13 @@ public class PhotoPicker extends Activity implements View.OnClickListener {
 
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+            // surface刚刚创建时，会改变大小
         }
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
-
+            // APP进入后台时，会触发此事件
+            // mSelf.response("");
         }
     };
 
@@ -174,10 +175,10 @@ public class PhotoPicker extends Activity implements View.OnClickListener {
                 FileOutputStream outStream = new FileOutputStream(mFilename, false);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
                 outStream.close();
-                mSelf.response(mFilename);
+                this.response(mFilename);
             } catch (Exception e) {
                 e.printStackTrace();
-                mSelf.response("");
+                this.response("");
             }
         }
     }
@@ -260,13 +261,17 @@ public class PhotoPicker extends Activity implements View.OnClickListener {
     }
 
     private void response(String filename) {
-        PhotoPicker.response(mInstance, mFilename);
+        PhotoPicker.response(mInstance, filename);
         this.finish();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (null != mCamera) {
+            mCamera.Release();
+        }
+        // 若之前已经response过正确的相片路径，此处会再次触发，但是native层的回调函数已被上一次response注销，因此此次response会被忽略。
         this.response("");
     }
 
