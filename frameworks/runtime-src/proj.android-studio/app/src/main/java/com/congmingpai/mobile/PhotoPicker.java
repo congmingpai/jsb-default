@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -217,13 +219,18 @@ public class PhotoPicker extends Activity implements View.OnClickListener {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         for (int i = 0; i < permissions.length; ++i) {
-            switch (requestCode) {
-                case PERMISSION_TAKE:
-                    this.takePhoto();
-                    break;
-                case PERMISSION_PICK:
-                    this.pickPhoto();
-                    break;
+            if (PackageManager.PERMISSION_GRANTED == grantResults[i]) {
+                switch (requestCode) {
+                    case PERMISSION_TAKE:
+                        this.takePhoto();
+                        break;
+                    case PERMISSION_PICK:
+                        this.pickPhoto();
+                        break;
+                }
+            }
+            else {
+                this.response("");
             }
         }
     }
