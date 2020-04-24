@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">聪明派</string>
+    <string name="app_name" translatable="false">STABLE</string>
+    <string name="fileprovider_authorities">com.congmingpai.mobile.fileprovider</string>
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--xhdpi为标准分辨率-->
+    <dimen name="px200" parent="@android:style/Theme.NoTitleBar.Fullscreen">66.67dp</dimen>
+    <dimen name="px100" parent="@android:style/Theme.NoTitleBar.Fullscreen">33.33dp</dimen>
+    <dimen name="px109" parent="@android:style/Theme.NoTitleBar.Fullscreen">36.33dp</dimen>
+    <dimen name="px146" parent="@android:style/Theme.NoTitleBar.Fullscreen">48.67dp</dimen>
+    <dimen name="px152" parent="@android:style/Theme.NoTitleBar.Fullscreen">50.67dp</dimen>
+    <dimen name="px1280" parent="@android:style/Theme.NoTitleBar.Fullscreen">426.67dp</dimen>
+    <dimen name="px720" parent="@android:style/Theme.NoTitleBar.Fullscreen">240dp</dimen>
+</resources>

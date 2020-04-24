@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.congmingpai.mobile.stable"
+    android:versionName="1.55.0"
     android:installLocation="auto">
 
     <uses-feature android:glEsVersion="0x00020000" />
@@ -16,6 +17,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- Bugly -->
     <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
@@ -35,7 +37,18 @@
         <!-- Tell Cocos2dxActivity the name of our .so -->
         <meta-data android:name="android.app.lib_name"
                    android:value="cocos2djs" />
-        
+
+        <!-- 添加FileProvider以保存相机拍摄的结果，否则无法保存文件，安卓相机拍摄结果为缩略图，非原图，7.0以上系统只允许在应用内部使用[file://]uri -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="@string/fileprovider_authorities"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
         <activity
             android:name="org.cocos2dx.javascript.AppActivity"
             android:screenOrientation="sensorLandscape"
@@ -47,6 +60,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.congmingpai.mobile.PhotoPicker"
+            android:screenOrientation="sensorLandscape"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
         </activity>
 
         <!-- WechatSDK Begin -->
